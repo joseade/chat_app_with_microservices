@@ -78,12 +78,15 @@ export const setLanguage = (language) => {
   };
 };
 
+const baseURL = "/api";
+//const baseURL = "http://localhost:4000";
+
 export const updateLanguage = (language) => ({
   type: Types.UPDATE_LANGUAGE_REQUEST,
   payload: language,
   meta: {
     method: "POST",
-    url: "/users/language",
+    url: baseURL + "/users/language",
     succes: Types.UPDATE_LANGUAGE_SUCCES,
   },
 });
@@ -93,7 +96,7 @@ export const updateAvatar = (profilePicture) => ({
   payload: profilePicture,
   meta: {
     method: "POST",
-    url: "/users/picture",
+    url: baseURL + "/users/picture",
     succes: Types.UPDATE_AVATAR_SUCCES,
   },
 });
@@ -103,7 +106,7 @@ export const registerRequest = (user) => ({
   payload: user,
   meta: {
     method: "POST",
-    url: "/users/signup",
+    url: baseURL + "/users/signup",
     succes: Types.REGISTER_USER_SUCCES,
     error: Types.REGISTER_USER_ERROR,
   },
@@ -114,7 +117,7 @@ export const loginRequest = (user) => ({
   payload: user,
   meta: {
     method: "POST",
-    url: "/users/signin",
+    url: baseURL + "/users/signin",
     succes: Types.LOGIN_USER_SUCCES,
     error: Types.LOGIN_USER_ERROR,
   },
@@ -125,7 +128,7 @@ export const logoutRequest = (user) => ({
   payload: user,
   meta: {
     method: "POST",
-    url: "/users/signout",
+    url: baseURL + "/users/signout",
     succes: Types.LOGOUT_USER_SUCCES,
     error: Types.LOGOUT_USER_ERROR,
   },
@@ -136,7 +139,7 @@ export const searchUserRequest = (user) => ({
   payload: user,
   meta: {
     method: "GET",
-    url: `/users/${user}`,
+    url: baseURL + `/users/${user}`,
     succes: Types.SEARCH_USER_SUCCES,
     error: Types.SEARCH_USER_ERROR,
   },
@@ -147,7 +150,7 @@ export const followUserRequest = (user, friend) => ({
   payload: friend,
   meta: {
     method: "POST",
-    url: `/users/${user.id}/follow`,
+    url: baseURL + `/users/${user.id}/follow`,
     succes: Types.FOLLOW_USER_SUCCES,
     error: Types.FOLLOW_USER_ERROR,
   },

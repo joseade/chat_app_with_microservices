@@ -41,6 +41,7 @@ const ChatSection = () => {
     }
     if (sendText === "") return;
 
+    //console.log(sendText.toString().replace(/"/g, "*"));
     dispatch(
       actionsChat.createMessage(
         conversation._id,

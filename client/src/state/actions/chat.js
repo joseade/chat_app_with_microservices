@@ -29,25 +29,60 @@ export const getConversation = (conversation) => ({
   payload: conversation,
 });
 
+const baseURL = "/graph";
+//const baseURL = "http://localhost:8000";
 export const messagesRequest = (conversation) => ({
   type: Types.MESSAGES_REQUEST,
-  payload: conversation,
+  payload: {
+    query: `
+  query {
+    getMessage(conversationId:"${conversation._id}"){
+     members
+     _id
+     conversationId
+     sender
+     text
+     createdAt
+     updatedAt
+   }
+  }
+  `,
+  },
   meta: {
-    method: "GET",
-    url: `/users/messages/${conversation._id}`,
+    method: "POST",
+    url: baseURL + "/graphql",
     succes: Types.MESSAGES_SUCCES,
     error: Types.MESSAGES_ERROR,
+    graphql: true,
   },
 });
 
 export const createMessage = (conversationId, sender, text, members) => ({
   type: Types.CREATE_MESSAGE_REQUEST,
-  payload: { conversationId, sender, text },
+  payload: {
+    query: `
+  mutation {
+    newMessage(conversationId:"${conversationId}", sender:"${sender}", text:"${text}"){
+     members
+     _id
+     conversationId
+     sender
+     text
+     createdAt
+     updatedAt
+   }
+  }
+  `,
+  },
   meta: {
     method: "POST",
-    url: "/users/messages",
+    url: baseURL + "/graphql",
     succes: Types.CREATE_MESSAGE_SUCCES,
     members,
+    graphql: true,
+    conversationId,
+    sender,
+    text,
   },
 });
 

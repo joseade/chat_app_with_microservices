@@ -56,11 +56,13 @@ export default function NavBar({ props }) {
     );
     dispatch(actions.followUserRequest(possibleFriend, { userId: user.id }));
   };
+  const baseURL = "/api";
+  //const baseURL = "http://localhost:8000";
 
   const onLogout = () => {
     const getUser = async () => {
       try {
-        const res = await axios.post("/users/signout");
+        const res = await axios.post(baseURL + "/users/signout");
         dispatch(actions.stopSocket());
         dispatch(actions.stopChat());
         dispatch(actions.stopConversations());

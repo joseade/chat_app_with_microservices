@@ -25,7 +25,7 @@ import {
 } from "@apollo/client";
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = window.location.origin + "/api";
+axios.defaults.baseURL = window.location.origin;
 //axios.defaults.baseURL = "http://localhost:4000";
 
 const logger = createLogger();
@@ -33,32 +33,32 @@ const sagaMiddleware = createSagaMiddleware();
 const store = createStore(reducers, applyMiddleware(sagaMiddleware, logger));
 sagaMiddleware.run(rootSaga);
 
-const client = new ApolloClient({
-  uri: window.location.origin + "/socket/graphql",
-  cache: new InMemoryCache(),
-});
+// const client = new ApolloClient({
+//   uri: window.location.origin + "/socket/graphql",
+//   cache: new InMemoryCache(),
+// });
 
-client
-  .query({
-    query: gql`
-      query {
-        hello {
-          userId
-          socketId
-          profilePicture
-          name
-          email
-        }
-      }
-    `,
-  })
-  .then((result) => console.log(result));
+// client
+//   .query({
+//     query: gql`
+//       query {
+//         hello {
+//           userId
+//           socketId
+//           profilePicture
+//           name
+//           email
+//         }
+//       }
+//     `,
+//   })
+//   .then((result) => console.log(result));
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </ApolloProvider>,
+  // <ApolloProvider client={client}>
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  // </ApolloProvider>
   document.getElementById("root")
 );

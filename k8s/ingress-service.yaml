@@ -12,13 +12,17 @@ spec:
         paths:
           - path: /?(.*)
             backend:
-              serviceName: client-cluster-ip-service
+              serviceName: client-service
               servicePort: 3000
           - path: /api/?(.*)
             backend:
-              serviceName: server-cluster-ip-service
+              serviceName: auth-service
               servicePort: 4000
           - path: /socket/?(.*)
             backend:
-              serviceName: socket-cluster-ip-service
+              serviceName: notification-service
               servicePort: 5000
+          - path: /graph/?(.*)
+            backend:
+              serviceName: chat-service
+              servicePort: 8000

@@ -19,12 +19,13 @@ const Dashboard = (props) => {
   const { user, chat, userConversations } = useSelector((state) => state);
   const dispatch = useDispatch();
   const { i18n } = useTranslation();
-
+  const baseURL = "/api";
+  //const baseURL = "http://localhost:8000";
   useEffect(() => {
     if (!user.signin) {
       const getUser = async () => {
         try {
-          const res = await axios.get("/users/currentuser");
+          const res = await axios.get(baseURL + "/users/currentuser");
           const currentUser = { ...res.data.currentUser };
           dispatch(actions.userSuccess(currentUser));
           //dispatch({ type: "LOGIN_USER_SUCCES", payload: currentUser });

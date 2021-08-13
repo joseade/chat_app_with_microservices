@@ -11,8 +11,8 @@ const currentUserRouter = require("./routes/current-user");
 const signinRouter = require("./routes/signin");
 const signoutRouter = require("./routes/signout");
 const signupRouter = require("./routes/signup");
-const conversationRouter = require("./routes/conversation");
-const messageRouter = require("./routes/message");
+//const conversationRouter = require("./routes/conversation");
+//const messageRouter = require("./routes/message");
 
 const errorHandler = require("./middlewares/error-handler");
 const NotFoundError = require("./errors/not-found-error");
@@ -40,8 +40,8 @@ app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
-app.use(messageRouter);
-app.use(conversationRouter);
+//app.use(messageRouter);
+//app.use(conversationRouter);
 
 app.get("*", () => {
   throw new NotFoundError();

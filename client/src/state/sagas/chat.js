@@ -4,13 +4,21 @@ import * as api from "../actions/api";
 
 function* apiProcess({ payload, meta }) {
   try {
-    const { conversationId, sender, text } = payload;
+    const { conversationId, sender, text } = meta;
     const { data } = yield call(api.request, payload, meta);
-    yield put(api.succes(meta.succes, data));
+    const name = Object.keys(data.data)[0];
+    yield put(api.succes(meta.succes, data.data[name]));
+
+    // if (meta.graphql) {
+    //   const name = Object.keys(data.data)[0];
+    //   yield put(api.succes(meta.succes, data.data[name]));
+    // } else {
+    //   yield put(api.succes(meta.succes, data));
+    // }
     if (meta.succes === actions.Types.CREATE_MESSAGE_SUCCES) {
       for (const member of meta.members) {
         if (sender !== member) {
-          yield put(actions.sendMessage(member, data));
+          yield put(actions.sendMessage(member, data.data[name]));
         }
       }
     }

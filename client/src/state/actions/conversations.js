@@ -16,16 +16,29 @@ export const Types = {
   USER_QUITS_CONVERSATION_SUCCES: "USER_QUITS_CONVERSATION_SUCCES",
 };
 
+const baseURL = "/graph";
+//const baseURL = "http://localhost:8000";
+
 export const userQuitsConversation = (conversationId, removedUserId) => ({
   type: Types.USER_QUITS_CONVERSATION_REQUEST,
   payload: {
-    conversationId,
-    removedUserId,
+    query: `
+  mutation {
+     deleteUserFromConversation(conversationId:"${conversationId}", removedUserId:"${removedUserId}"){
+     _id
+     members
+     createdAt
+     updatedAt
+   }
+  }
+  `,
   },
   meta: {
     method: "POST",
-    url: `/users/conversations/deleteuser`,
+    url: baseURL + "/graphql",
     succes: Types.USER_QUITS_CONVERSATION_SUCCES,
+    graphql: true,
+    removedUserId,
   },
 });
 
@@ -35,47 +48,92 @@ export const deleteFriendFromConversation = (
 ) => ({
   type: Types.DELETE_FRIEND_FROM_CONVERSATION_REQUEST,
   payload: {
-    conversationId,
-    removedUserId,
+    query: `
+  mutation {
+     deleteUserFromConversation(conversationId:"${conversationId}", removedUserId:"${removedUserId}"){
+     _id
+     members
+     createdAt
+     updatedAt
+   }
+  }
+  `,
   },
   meta: {
     method: "POST",
-    url: `/users/conversations/deleteuser`,
+    url: baseURL + "/graphql",
     succes: Types.DELETE_FRIEND_FROM_CONVERSATION_SUCCES,
+    graphql: true,
+    removedUserId,
   },
 });
 
 export const addFriendToConversation = (conversationId, newUserId) => ({
   type: Types.ADD_FRIEND_TO_CONVERSATION_REQUEST,
   payload: {
-    conversationId,
-    newUserId,
+    query: `
+  mutation {
+    addUserToConversation(conversationId:"${conversationId}", newUserId:"${newUserId}"){
+     _id
+     members
+     createdAt
+     updatedAt
+   }
+  }
+  `,
   },
   meta: {
     method: "POST",
-    url: `/users/conversations/adduser`,
+    url: baseURL + "/graphql",
     succes: Types.ADD_FRIEND_TO_CONVERSATION_SUCCES,
+    graphql: true,
   },
 });
 
 export const conversationsRequest = (user) => ({
   type: Types.CONVERSATIONS_REQUEST,
-  payload: user,
+  payload: {
+    query: `
+  query {
+    getUserConversations(userId:"${user.id}"){
+     _id
+     members
+     createdAt
+     updatedAt
+   }
+  }
+  `,
+  },
   meta: {
-    method: "GET",
-    url: `/users/conversations/${user.id}`,
+    method: "POST",
+    url: baseURL + "/graphql",
     succes: Types.CONVERSATIONS_SUCCES,
     error: Types.CONVERSATIONS_ERROR,
+    graphql: true,
   },
 });
 
 export const createConversation = (senderId, receiverId) => ({
   type: Types.CREATE_CONVERSATION_REQUEST,
-  payload: { senderId, receiverId },
+  payload: {
+    query: `
+  mutation {
+    createConversation(senderId:"${senderId}", receiverId:"${receiverId}"){
+     _id
+     members
+     createdAt
+     updatedAt
+   }
+  }
+  `,
+  },
   meta: {
     method: "POST",
-    url: "/users/conversations",
+    url: baseURL + "/graphql",
     succes: Types.CREATE_CONVERSATION_SUCCES,
+    graphql: true,
+    senderId,
+    receiverId,
   },
 });
 

@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: socket-deployment
+  name: notification-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: socket
+      component: notification
   template:
     metadata:
       labels:
-        component: socket
+        component: notification
     spec:
       containers:
-        - name: socket
-          image: pumajosleaa/socket
+        - name: notification
+          image: pumajosleaa/notification
           ports:
             - containerPort: 5000

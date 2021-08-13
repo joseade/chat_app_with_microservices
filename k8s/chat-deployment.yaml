@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: chat
+  template:
+    metadata:
+      labels:
+        component: chat
+    spec:
+      containers:
+        - name: chat
+          image: pumajosleaa/chat
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MONGO_URL
+              value: "mongodb://mongodb-service:27017/chatapp"
